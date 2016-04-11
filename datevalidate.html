@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>
+date validation
+</title>  
+<script>
+function checkDate(datefield)
+  {
+    var dateallowBlank = true;
+    var dateminYear = 1902;
+    var datemaxYear = (new Date()).getFullYear();
+
+    var Msgerror = "";
+
+    // regular expression to match required date format
+    re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+
+    if(datefield.value != '') {
+      if(regs = datefield.value.match(re)) {
+        if(regs[1] < 1 || regs[1] > 31) {
+          Msgerror = "Invalid value for day: " + regs[1];
+        } else if(regs[2] < 1 || regs[2] > 12) {
+          Msgerror = "Invalid value for month: " + regs[2];
+        } else if(regs[3] < dateminYear || regs[3] > maxYear) {
+          Msgerror = "Invalid input  for year: " + regs[3] + " - input  between " + dateminYear + " and " + maxYear;
+        }
+      } else {
+        Msgerror = "Invalid date format: " + datefield.value;
+      }
+    } else if(!dateallowBlank) {
+      Msgerror = "Empty date not allowed!";
+    }
+
+    if(Msgerror != "") {
+      alert(Msgerror);
+      datefield.focus();
+      return false;
+    }
+
+    return true;
+  }
+
+
+  function datecheckForm(form)
+  {
+    return datecheckDate(form.datestart);
+  }
+
+</script>
+
+<body>
+<form method="POST" action="..." onsubmit="return datecheckForm(this);">
+<fieldset>
+<legend>date validation</legend>
+<label>Start Date: <input type="text" size="12" required pattern="\d{1,2}/\d{1,2}/\d{4}" placeholder="dd/mm/yyyy" name="datestart"></label>
+<p><input type="submit"></p>
+</fieldset>
+</form>
+</body>
